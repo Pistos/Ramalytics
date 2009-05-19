@@ -5,4 +5,4 @@
 
 require File.expand_path('app', File.dirname(__FILE__))
 
-Ramaze.start(:adapter => :webrick, :port => 7000, :file => __FILE__)
+Ramaze.start( :adapter => :thin, :port => 8016, :file => __FILE__ )
