@@ -6,5 +6,7 @@ class MainController < Controller
   end
 
   def track
+    Ramaze::Log.info "L: #{request['l']}    R: #{request['r']}"
+    ''
   end
 end
