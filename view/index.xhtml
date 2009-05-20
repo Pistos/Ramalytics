@@ -9,6 +9,7 @@
 
 <thead><tr>
   <td>Seen?</td>
+  <td>Seen<br/>Domain?</td>
   <td>URI</td>
 </tr></thead>
 
@@ -16,6 +17,7 @@
 
 <tr>
 <td>#{ a 'seen', SeenController.r( 'referrer', r.uri_id ) }</td>
+<td>#{ a 'seen dom', SeenController.r( 'referrer_domain', r.uri_id ) }</td>
 <td><a href="#{ r.uri }">#{ r.uri }</a></td>
 </tr>
 
