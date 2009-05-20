@@ -23,6 +23,7 @@ CREATE TABLE uris (
     subdomain_id INTEGER NOT NULL REFERENCES subdomains( id ),
     path VARCHAR( 1024 ) NOT NULL,
     query VARCHAR( 4096 ),
+    seen_as_referrer BOOLEAN NOT NULL DEFAULT FALSE,
     UNIQUE( subdomain_id, path )
 );
 

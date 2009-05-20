@@ -9,7 +9,7 @@ class MainController < Controller
   }
 
   def index
-    @referrers = Referrer.all
+    @referrers = Referrer.where( seen_as_referrer: false )
   end
 
   define_method 'ramalytics.js' do
@@ -38,4 +38,5 @@ class MainController < Controller
     )
     ''
   end
+
 end
