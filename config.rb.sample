@@ -2,6 +2,7 @@ module Ramalytics
   include Ramaze::Optioned
 
   options.dsl do
+    o 'Ramalytics website root', :site, 'http://ram.purepistos.net'
     sub :db do
       o 'Database adapter', :adapter, 'Pg'
       o 'Database name', :name, 'ramalytics'
