@@ -6,7 +6,12 @@ class MainController < Controller
   end
 
   def track
-    Ramaze::Log.info "L: #{request['l']}    R: #{request['r']}"
+    location = Ramalytics::URI.parse_and_ensure_exists( request[ 'l' ] )
+    referrer = Ramalytics::URI.parse_and_ensure_exists( request[ 'r' ] )
+    Hit.create(
+      uri_id: location.id,
+      referrer_uri_id: referrer.id
+    )
     ''
   end
 end
