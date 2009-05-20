@@ -7,14 +7,15 @@ class MainController < Controller
 
   define_method 'ramalytics.js' do
     js = %|
-    if( document.referrer ) {
-      document.write(
-          '<'+'img src="#{Ramalytics.options.site}/track?' +
-          'r=' + escape( document.referrer ) +
-          '&l=' + escape( document.location ) +
-          '" style="float:left;" width="1" height="1"/>'
-      );
-    }
+    document.write(
+      '<'+'img src="#{Ramalytics.options.site}/track?' +
+      'l=' + escape( document.location ) + (
+        document.referrer ?
+        '&r=' + escape( document.referrer ) :
+        ''
+      ) +
+      '" style="float:left;" width="1" height="1"/>'
+    );
     |
 
     js.gsub( / +/, ' ' ).strip
