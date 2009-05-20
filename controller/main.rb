@@ -1,5 +1,12 @@
 class MainController < Controller
-  layout { ! request.xhr? }
+  layout { |p,w|
+    case p
+      when 'index'
+        'default'
+      else
+        nil
+    end
+  }
 
   def index
     @referrers = Referrer.all
