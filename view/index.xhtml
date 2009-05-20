@@ -5,12 +5,20 @@
 
 <h3>Referrers</h3>
 
-<ul>
+<table id="referrers">
+
+<thead><tr>
+  <td>Seen?</td>
+  <td>URI</td>
+</tr></thead>
 
 <?r @referrers.each do |r| ?>
 
-<li>#{ r.uri }</li>
+<tr>
+<td>#{ a 'seen', rs( 'seen', 'referrer', r.uri_id ) }</td>
+<td><a href="#{ r.uri }">#{ r.uri }</a></td>
+</tr>
 
 <?r end ?>
 
-</ul>
+</table>
