@@ -26,7 +26,8 @@ class MainController < Controller
     referrer = Ramalytics::URI.parse_and_ensure_exists( request[ 'r' ] )
     Hit.create(
       uri_id: location.id,
-      referrer_uri_id: referrer ? referrer.id : nil
+      referrer_uri_id: referrer ? referrer.id : nil,
+      ip: request.ip
     )
     ''
   end
