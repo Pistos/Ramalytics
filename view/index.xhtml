@@ -1,16 +1,13 @@
-<div class="notice">
-  <h3>Ramalytics</h3>
-  Ramalytics is up and running, ready to track!
-</div>
+<h2>Ramalytics</h2>
 
-<h3>Referrers</h3>
+<h3>New Referrers</h3>
 
-<table id="referrers">
+<table id="referrers" class="table">
 
 <thead><tr>
-  <td>Mark Seen</td>
-  <td>Mark<br/>Domain<br/>Seen</td>
-  <td>URI</td>
+  <th>Mark Seen</th>
+  <th>Mark<br/>Domain<br/>Seen</th>
+  <th>URI</th>
 </tr></thead>
 
 <?r @referrers.each do |r| ?>
@@ -18,7 +15,7 @@
 <tr>
 <td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
 <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
-<td><a href="#{ r.uri }">#{ r.uri }</a></td>
+<td><a href="#{ r.uri }">#{ r.uri[ 0..200 ] }</a></td>
 </tr>
 
 <?r end ?>

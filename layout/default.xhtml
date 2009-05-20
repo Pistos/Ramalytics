@@ -3,7 +3,7 @@
   "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <title>#{@title}</title>
+    <title>Ramalytics</title>
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -16,12 +16,14 @@
     #{css 'screen'}
   </head>
   <body>
-    <h1>#{@title}</h1>
 
-    #{ flashbox }
+    <div id="page">
+      #{ flashbox }
 
-    <div id="content">
-      #@content
+      <div id="content">
+        #@content
+      </div>
     </div>
+
   </body>
 </html>
