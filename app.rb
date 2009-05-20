@@ -10,6 +10,8 @@ require 'ramaze'
 # app from any other working directory
 $LOAD_PATH.unshift(__DIR__)
 
+require 'config'
+
 # Initialize controllers and models
 require 'model/init'
 require 'controller/init'
