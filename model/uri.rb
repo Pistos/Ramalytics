@@ -1,7 +1,7 @@
 module Ramalytics
   class URI < DBI::Model( :uris )
     def self.parse_and_ensure_exists( s )
-      return nil  if s !~ %r{^(https?://)(.+?)(/.+?)(\?.+)?$}
+      return nil  if s !~ %r{^(https?://)(.+?)(/.*?)(\?.+)?$}
       protocol, full_domain, path, query = $1, $2, $3, $4
       a = full_domain.split( '.' )
       subdomainname = a[ 0..-3 ].join( '.' )
