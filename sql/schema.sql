@@ -19,13 +19,14 @@ CREATE TABLE subdomains (
 
 CREATE TABLE uris (
     id SERIAL PRIMARY KEY,
+    protocol VARCHAR( 16 ) NOT NULL,
     subdomain_id INTEGER NOT NULL REFERENCES subdomains( id ),
     path VARCHAR( 1024 ) NOT NULL,
     query VARCHAR( 4096 ),
     UNIQUE( subdomain_id, path )
 );
 
-CREATE TABLE hit (
+CREATE TABLE hits (
     uri_id INTEGER NOT NULL REFERENCES uris( id ),
     referrer_uri_id INTEGER REFERENCES uris( id )
 );
