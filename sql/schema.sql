@@ -28,6 +28,7 @@ CREATE TABLE uris (
 
 CREATE TABLE hits (
     id SERIAL PRIMARY KEY,
+    moment TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     uri_id INTEGER NOT NULL REFERENCES uris( id ),
     referrer_uri_id INTEGER REFERENCES uris( id )
 );
