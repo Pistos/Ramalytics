@@ -1,3 +1,16 @@
-<h3>Ramalytics</h3>
+<div class="notice">
+  <h3>Ramalytics</h3>
+  Ramalytics is up and running, ready to track!
+</div>
 
-Ramalytics is up and running, ready to track!
+<h3>Referrers</h3>
+
+<ul>
+
+<?r @referrers.each do |r| ?>
+
+<li>#{ r.uri }</li>
+
+<?r end ?>
+
+</ul>

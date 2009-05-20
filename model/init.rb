@@ -11,3 +11,5 @@ require 'model/domain'
 require 'model/subdomain'
 require 'model/uri'
 require 'model/hit'
+
+require 'model/referrer'

@@ -2,7 +2,7 @@ class MainController < Controller
   layout { ! request.xhr? }
 
   def index
-    @title = "Welcome to Ramaze!"
+    @referrers = Referrer.all
   end
 
   define_method 'ramalytics.js' do
