@@ -8,16 +8,16 @@
 <table id="referrers">
 
 <thead><tr>
-  <td>Seen?</td>
-  <td>Seen<br/>Domain?</td>
+  <td>Mark Seen</td>
+  <td>Mark<br/>Domain<br/>Seen</td>
   <td>URI</td>
 </tr></thead>
 
 <?r @referrers.each do |r| ?>
 
 <tr>
-<td>#{ a 'seen', SeenController.r( 'referrer', r.uri_id ) }</td>
-<td>#{ a 'seen dom', SeenController.r( 'referrer_domain', r.uri_id ) }</td>
+<td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
+<td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
 <td><a href="#{ r.uri }">#{ r.uri }</a></td>
 </tr>
 
