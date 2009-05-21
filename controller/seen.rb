@@ -18,30 +18,39 @@ class SeenController < Controller
   end
 
   def referrer_domain( uri_id )
-    r = $dbh.u(
-      %{
-        UPDATE
-          uris
-        SET
-          seen_as_referrer = true
-        FROM
-          subdomains sd
-        WHERE
-          sd.id = uris.subdomain_id
-          AND sd.domain_id = (
-            SELECT sd2.domain_id
-            FROM
-              subdomains sd2,
-              uris u2
-            WHERE
-              u2.id = ?
-              AND sd2.id = u2.subdomain_id
-            LIMIT 1
-          )
-      },
-      uri_id.to_i
-    )
-    Ramaze::Log.info r
+    uri = Ramalytics::URI[ uri_id.to_i ]
+    if uri
+      num_inserted = $dbh.i(
+        %{
+          INSERT INTO referrer_sightings (
+            uri_id,
+            user_id
+          ) SELECT
+            u.id,
+            ?
+          FROM
+            uris u
+          WHERE
+            u.subdomain_id = ?
+            AND NOT EXISTS(
+              SELECT 1
+              FROM referrer_sightings rs
+              WHERE
+                rs.uri_id = u.id
+                AND rs.user_id = ?
+              LIMIT 1
+            )
+        },
+        user.id,
+        uri.subdomain_id,
+        user.id
+      )
+      if num_inserted > 0
+        flash[ :success ] = "Marked #{num_inserted} referring URIs as seen."
+      else
+        flash[ :error ] = "No referring URIs marked as seen."
+      end
+    end
 
     redirect_referrer
   end
