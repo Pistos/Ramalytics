@@ -1,3 +1,5 @@
+<?r if @referrers ?>
+
 <h3>New Referrers</h3>
 
 <table id="referrers" class="table">
@@ -10,12 +12,14 @@
 
 <?r @referrers.each do |r| ?>
 
-<tr>
-<td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
-<td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
-<td><a href="#{ r.uri }">#{ r.uri[ 0..200 ] }</a></td>
-</tr>
+  <tr>
+  <td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
+  <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
+  <td><a href="#{ r.uri }">#{ r.uri[ 0..200 ] }</a></td>
+  </tr>
 
 <?r end ?>
 
 </table>
+
+<?r end ?>

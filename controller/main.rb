@@ -12,7 +12,9 @@ class MainController < Controller
   helper :stack, :user
 
   def index
-    @referrers = Referrer.where( seen_as_referrer: false )
+    if logged_in?
+      @referrers = Referrer.where( user_id: user.id, seen: false )
+    end
   end
 
   define_method 'ramalytics.js' do

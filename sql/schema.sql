@@ -23,7 +23,6 @@ CREATE TABLE uris (
     subdomain_id INTEGER NOT NULL REFERENCES subdomains( id ),
     path VARCHAR( 1024 ) NOT NULL,
     query VARCHAR( 4096 ),
-    seen_as_referrer BOOLEAN NOT NULL DEFAULT FALSE,
     UNIQUE( subdomain_id, path )
 );
 
@@ -50,3 +49,10 @@ CREATE TABLE users (
     )
 );
 
+CREATE TABLE referrer_sightings (
+    id        SERIAL      PRIMARY KEY,
+    uri_id    INTEGER     NOT NULL REFERENCES uris( id ),
+    user_id   INTEGER     NOT NULL REFERENCES users( id ),
+    moment    TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE( uri_id, user_id )
+);

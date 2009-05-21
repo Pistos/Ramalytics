@@ -1,9 +1,14 @@
 class SeenController < Controller
 
+  helper :user
+
   def referrer( uri_id )
     uri = Ramalytics::URI[ uri_id.to_i ]
     if uri
-      uri.seen_as_referrer = true
+      ReferrerSighting.create(
+        uri_id: uri.id,
+        user_id: user.id
+      )
       flash[ :success ] = 'Marked URI as seen.'
     else
       flash[ :error ] = "No URI with id #{uri_id}."
