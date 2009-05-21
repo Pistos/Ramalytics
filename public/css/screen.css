@@ -24,6 +24,7 @@ table#header {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0px;
+    margin-bottom: 1em;
 }
 
 #header .logo {
@@ -102,4 +103,14 @@ table#referrers th {
     background: #EEFFEE;
     padding: 1em;
     margin-bottom: 1em;
+}
+
+#nav {
+    background-color: #EEEEEE;
+    padding: 0.5em 1em;
+    font-size: 12px;
+    margin-bottom: 1em;
+}
+#nav > * {
+    margin-right: 1em;
 }

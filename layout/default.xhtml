@@ -18,13 +18,19 @@
   <body>
 
     <div id="page">
+
+      <table id="header"><tr>
+        <td class="logo"><a href="#{Ramalytics.options.site}"><img src="/images/ramaze-logo.png"/></a></td>
+        <td class="title"><a href="#{Ramalytics.options.site}">Ramalytics</a></td>
+      </td></tr></table>
+
       <div id="nav">
         <a href="#{Ramalytics.options.site}">Home</a>
         <?r if ! logged_in? ?>
           <a href="/register">Register</a>
           <a href="/login">Login</a>
         <?r else ?>
-          Logged in as #{user}
+          <span>Logged in as #{user}</span>
           <a href="/account">Account</a>
           <a href="/logout">Logout</a>
         <?r end ?>
@@ -35,6 +41,7 @@
       <div id="content">
         #@content
       </div>
+
     </div>
 
   </body>
