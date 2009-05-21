@@ -20,6 +20,26 @@ body {
   background: #CC6655;
 }
 
+table#header {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0px;
+}
+
+#header .logo {
+    text-align: right;
+}
+#header .title {
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+table#header td {
+    vertical-align: middle;
+    padding: 0px 5px;
+}
+
 #page {
   background: #fff;
   padding: 3em;
