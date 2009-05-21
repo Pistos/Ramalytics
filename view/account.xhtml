@@ -1,0 +1,9 @@
+<h3>Account</h3>
+
+<?r if user.api_key ?>
+<div>
+Your API key is: #{user.api_key}
+</div>
+<?r end ?>
+
+#{ a 'Generate a new API key', MainController.r( 'generate_api_key' ) }

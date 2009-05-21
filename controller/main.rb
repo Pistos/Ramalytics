@@ -1,7 +1,7 @@
 class MainController < Controller
   layout { |p,w|
     case p
-      when 'index', 'login', 'register'
+      when 'account', 'index', 'login', 'register'
         'default'
       else
         nil
@@ -105,8 +105,8 @@ class MainController < Controller
 
   def generate_api_key
     redirect_referrer  if ! logged_in?
-    user.api_key = Digest::SHA1.hexdigest( Selfmarks::API_KEY_SALT + Time.now.to_s )
-    redirect Rs( :account )
+    user.api_key = Digest::SHA1.hexdigest( Ramalytics.options.salt + Time.now.to_s )
+    redirect rs( :account )
   end
 
 end
