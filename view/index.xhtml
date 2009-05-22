@@ -8,7 +8,7 @@ control over the site by placing a challenge file on it.
 </p>
 <?r end ?>
 
-<form method="POST" action="/track_site">
+<form method="POST" action="/site/track">
 
 http://<input type="text" name="site"/> <input type="submit" value="Add"/>
 
@@ -26,8 +26,10 @@ http://<input type="text" name="site"/> <input type="submit" value="Add"/>
 <td>#{s.subdomain}</td>
 <td>
 <?r if s.challenge ?>
-  <a href="/verify/#{s.id}">Verify</a>
+  <a href="/site/verify/#{s.id}">Verify</a>
   #{s.challenge}
+<?r else ?>
+  (verified)
 <?r end ?>
 </td>
 </tr>

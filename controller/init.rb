@@ -6,3 +6,4 @@ end
 
 require 'controller/main'
 require 'controller/seen'
+require 'controller/site'

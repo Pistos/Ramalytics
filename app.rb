@@ -6,6 +6,7 @@
 require 'rubygems'
 require 'ramaze'
 require 'digest/sha1'
+require 'open-uri'
 
 # Add the directory this file resides in to the load path, so you can run the
 # app from any other working directory
