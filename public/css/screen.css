@@ -11,8 +11,18 @@ p + h3 {
 }
 
 body {
-  padding: 2em;
-  background: #DD6655;
+    padding: 2em;
+    background: #990000;
+}
+
+a {
+    color: #CC0000;
+}
+a:visited {
+    color: #880000;
+}
+a:hover {
+    background-color: #FFF6F6;
 }
 
 table#header {
@@ -41,11 +51,18 @@ table#header td {
 }
 
 #page {
-  background: #fff;
-  padding: 3em;
-  -moz-border-radius: 3em;
-  -webkit-border-radius: 3em;
-  border-radius: 3em;
+    background: #fff;
+    padding: 3em;
+    -moz-border-radius: 3em;
+    -webkit-border-radius: 3em;
+    border-radius: 3em;
+    min-height: 400px;
+}
+
+#footer {
+    font-size: 10px;
+    text-align: center;
+    margin-top: 3em;
 }
 
 p {
