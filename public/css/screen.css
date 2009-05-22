@@ -64,6 +64,9 @@ table#header td {
     text-align: center;
     margin-top: 3em;
 }
+#footer a {
+    color: #330000;
+}
 
 p {
 }
