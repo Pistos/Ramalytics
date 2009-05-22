@@ -12,6 +12,7 @@ require 'model/subdomain'
 require 'model/uri'
 require 'model/hit'
 require 'model/user'
+require 'model/subdomain_access'
 require 'model/referrer_sighting'
 
 require 'model/referrer'
