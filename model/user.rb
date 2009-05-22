@@ -26,7 +26,15 @@ class User < DBI::Model( :users )
   end
 
   def tracked_sites
-    SubdomainAccess.where( user_id: self.id )
+    if admin?
+      SubdomainAccess.all
+    else
+      SubdomainAccess.where( user_id: self.id )
+    end
+  end
+
+  def admin?
+    admin
   end
 
 end
