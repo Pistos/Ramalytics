@@ -12,9 +12,13 @@ class MainController < Controller
   helper :stack, :user
 
   def index
-    if logged_in?
-      @referrers = Referrer.where( user_id: user.id, seen: false )
-    end
+    return  if ! logged_in?
+    @referrers = Referrer.where( user_id: user.id, seen: false )
+    @sites = user.tracked_sites
+  end
+  def stats( tracked_site_id )
+    redirect_referrer  if ! logged_in?
+    @referrers = Referrer.where( user_id: user.id, seen: false )
   end
 
   define_method 'ramalytics.js' do
@@ -107,7 +111,6 @@ class MainController < Controller
 
   def account
     redirect_referrer  if ! logged_in?
-    @sites = user.tracked_sites
   end
 
   def track_site

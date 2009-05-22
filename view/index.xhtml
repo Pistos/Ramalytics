@@ -1,3 +1,42 @@
+<h3>Dashboard</h3>
+
+<?r if @sites.empty? ?>
+<p>
+Ramalytics always tracks whenever the necessary HTML snippet is placed on a
+page.  To see the stats, you must request access, then prove that you have
+control over the site by placing a challenge file on it.
+</p>
+<?r end ?>
+
+<form method="POST" action="/track_site">
+
+http://<input type="text" name="site"/> <input type="submit" value="Add"/>
+
+</form>
+
+<table class="table">
+
+<thead><tr>
+<th>Site</th>
+<th>Challenge File</th>
+</tr></thead>
+
+<?r @sites.each do |s| ?>
+<tr>
+<td>#{s.subdomain}</td>
+<td>
+<?r if s.challenge ?>
+  <a href="/verify/#{s.id}">Verify</a>
+  #{s.challenge}
+<?r end ?>
+</td>
+</tr>
+<?r end ?>
+</table>
+
+
+
+
 <?r if @referrers ?>
 
 <h3>New Referrers</h3>
