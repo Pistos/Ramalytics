@@ -59,7 +59,7 @@ class MainController < Controller
     user_login( username: username, password: password )
     if logged_in?
       flash[ :success ] = "Registered #{username}."
-      answer Rs( :/ )
+      answer rs( :/ )
     else
       flash[ :error ] = "Failed to register #{username}."
     end
@@ -74,7 +74,7 @@ class MainController < Controller
         :password => request[ 'password' ]
       )
       if logged_in?
-        answer Rs( :/ )
+        answer rs( :/ )
       end
     end
   end
