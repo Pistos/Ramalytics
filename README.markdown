@@ -46,11 +46,11 @@ just used all my familiar tools and technologies.
 ### Getting Started
 
 1. Visit your site, and register a new account.
-2. Login and go to your Account page.
-3. Create a tracker for each website you want to track.
-4. Insert this snippet before the closing </body> tag on every page or layout
-you want to track on: <script src="http://ram.purepistos.net/ramalytics.js"></script>
-5. Wait for stats to build up, then check your home page.
+2. Login and look at your Dashboard.
+3. Add each website you want to track.
+4. Verify each site you added.
+5. Insert the given snippet everywhere you want to.
+6. Wait for stats to build up, then check the stats page of each site.
 
 
 [1] "Not an actual search engine.  I know you wanted to google that, but don't bother."
