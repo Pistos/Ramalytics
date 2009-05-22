@@ -1,7 +1,7 @@
 class MainController < Controller
   layout { |p,w|
     case p
-      when 'account', 'index', 'login', 'register', 'stats'
+      when 'about', 'account', 'index', 'login', 'register', 'stats'
         'default'
       else
         nil
@@ -12,7 +12,9 @@ class MainController < Controller
   helper :stack, :user
 
   def index
-    return  if ! logged_in?
+    if ! logged_in?
+      redirect rs( :about )
+    end
     @sites = user.tracked_sites
   end
 
