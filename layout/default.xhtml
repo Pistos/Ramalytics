@@ -13,7 +13,12 @@
     <meta name="keywords" content="web,analytics,Ramaze" />
     <meta name="author" content="Pistos" />
     <meta name="date" content="#{Time.now.iso8601}" />
-    #{css 'screen'}
+
+    #{ css 'screen' }
+
+    <script src="http://www.google.com/jsapi"></script>
+    <script>google.load("jquery", "1");</script>
+    #{ js 'main' }
   </head>
   <body>
 
