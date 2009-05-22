@@ -1,9 +1,30 @@
 <h3>Account</h3>
 
-<?r if user.api_key ?>
-<div>
-Your API key is: #{user.api_key}
-</div>
-<?r end ?>
+<h4>Tracked Sites</h4>
 
-#{ a 'Generate a new API key', MainController.r( 'generate_api_key' ) }
+<p>
+Ramalytics always tracks whenever the necessary HTML snippet is placed on a
+page.  To see the stats, you must request access, then prove that you have
+control over the site by placing a challenge file on it.
+</p>
+
+<form method="POST" action="/track_site">
+
+Site: http://<input type="text" name="site"/> <input type="submit" value="Submit"/>
+
+</form>
+
+<table class="table">
+
+<thead><tr>
+<th>Site</th>
+<th>Challenge File</th>
+</tr></thead>
+
+<?r @sites.each do |s| ?>
+<tr>
+<td>#{s.subdomain}</td>
+<td>#{s.challenge}</td>
+</tr>
+<?r end ?>
+</table>
