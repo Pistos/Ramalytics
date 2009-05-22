@@ -53,5 +53,4 @@ you want to track on: <script src="http://ram.purepistos.net/ramalytics.js"></sc
 5. Wait for stats to build up, then check your home page.
 
 
-[1]: # "Not an actual search engine.  I know you wanted to google that, but don't
-bother."
+[1] "Not an actual search engine.  I know you wanted to google that, but don't bother."
