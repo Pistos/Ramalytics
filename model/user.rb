@@ -25,4 +25,8 @@ class User < DBI::Model( :users )
     username || openid
   end
 
+  def tracked_sites
+    SubdomainAccess.where( user_id: self.id )
+  end
+
 end

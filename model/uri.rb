@@ -31,6 +31,10 @@ module Ramalytics
       subdomain = Subdomain.find_or_create( domain_id: domain.id, name: subdomainname )
       find_or_create( protocol: protocol, subdomain_id: subdomain.id, path: path, query: query )
     end
+
+    def subdomain
+      Subdomain[ subdomain_id ]
+    end
   end
 
 end
