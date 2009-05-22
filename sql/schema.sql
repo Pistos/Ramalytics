@@ -23,7 +23,7 @@ CREATE TABLE uris (
     subdomain_id INTEGER NOT NULL REFERENCES subdomains( id ),
     path         VARCHAR( 1024 ) NOT NULL,
     query        VARCHAR( 4096 ),
-    UNIQUE( subdomain_id, path )
+    UNIQUE( subdomain_id, path, query )
 );
 
 CREATE TABLE hits (
