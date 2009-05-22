@@ -33,6 +33,7 @@ CREATE OR REPLACE VIEW uri_strings AS
 CREATE OR REPLACE VIEW referrers AS
     SELECT DISTINCT
           h.referrer_uri_id AS uri_id
+        , u.subdomain_id
         , us.uri
         , users.id AS user_id
         , EXISTS(
@@ -45,10 +46,12 @@ CREATE OR REPLACE VIEW referrers AS
         ) AS seen
     FROM
           hits h
+        , uris u
         , uri_strings us
         , users
     WHERE
         h.referrer_uri_id IS NOT NULL
+        AND u.id = h.uri_id
         AND us.id = h.referrer_uri_id
     ORDER BY
         uri

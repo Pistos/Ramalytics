@@ -1,7 +1,7 @@
 class MainController < Controller
   layout { |p,w|
     case p
-      when 'account', 'index', 'login', 'register'
+      when 'account', 'index', 'login', 'register', 'stats'
         'default'
       else
         nil
@@ -13,12 +13,18 @@ class MainController < Controller
 
   def index
     return  if ! logged_in?
-    @referrers = Referrer.where( user_id: user.id, seen: false )
     @sites = user.tracked_sites
   end
-  def stats( tracked_site_id )
+
+  def stats( subdomain_id )
     redirect_referrer  if ! logged_in?
-    @referrers = Referrer.where( user_id: user.id, seen: false )
+    @subdomain = Subdomain[ subdomain_id.to_i ]
+    if @subdomain.nil?
+      flash[ :error ] = "Invalid subdomain."
+      redirect_referrer
+    end
+
+    @referrers = Referrer.where( user_id: user.id, subdomain_id: subdomain_id.to_i, seen: false )
   end
 
   define_method 'ramalytics.js' do

@@ -23,7 +23,7 @@ http://<input type="text" name="site"/> <input type="submit" value="Add"/>
 
 <?r @sites.each do |s| ?>
 <tr>
-<td>#{s.subdomain}</td>
+<td><a href="/stats/#{s.subdomain_id}">#{s.subdomain}</a></td>
 <td>
 <?r if s.challenge ?>
   <a href="/site/verify/#{s.id}">Verify</a>
@@ -39,28 +39,3 @@ http://<input type="text" name="site"/> <input type="submit" value="Add"/>
 
 
 
-<?r if @referrers ?>
-
-<h3>New Referrers</h3>
-
-<table id="referrers" class="table">
-
-<thead><tr>
-  <th>Mark Seen</th>
-  <th>Mark<br/>Domain<br/>Seen</th>
-  <th>URI</th>
-</tr></thead>
-
-<?r @referrers.each do |r| ?>
-
-  <tr>
-  <td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
-  <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
-  <td><a href="#{ r.uri }">#{ r.uri[ 0..200 ] }</a></td>
-  </tr>
-
-<?r end ?>
-
-</table>
-
-<?r end ?>
