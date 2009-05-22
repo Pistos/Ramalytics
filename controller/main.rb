@@ -102,13 +102,42 @@ class MainController < Controller
   def logout
     user_logout
     session[ :openid ] = nil
-    redirect Rs( :/ )
+    redirect rs( :/ )
   end
 
-  def generate_api_key
+  def account
     redirect_referrer  if ! logged_in?
-    user.api_key = Digest::SHA1.hexdigest( Ramalytics.options.salt + Time.now.to_s )
-    redirect rs( :account )
+    @sites = user.tracked_sites
+  end
+
+  def track_site
+    redirect_referrer  if ! logged_in?
+
+    site = request[ 'site' ]
+
+    uri = Ramalytics::URI.parse_and_ensure_exists( site )
+    if uri.nil?
+      flash[ :error ] = "Failed to parse site. (#{site})"
+      redirect_referrer
+    end
+
+    access = SubdomainAccess[ subdomain_id: uri.subdomain_id, user_id: user.id ]
+    if access
+      flash[ :error ] = 'You already have or requested access to that subdomain.'
+    else
+      access = SubdomainAccess.create(
+        subdomain_id: uri.subdomain_id,
+        user_id: user.id,
+        challenge: 'ramalytics-' + Digest::SHA1.hexdigest( Ramalytics.options.salt + Time.now.to_s )[ 0..16 ] + '.html'
+      )
+      if access
+        flash[ :success ] = "Access request accepted.  Please create the challenge file (http://#{uri.subdomain}/#{access.challenge}), then click Verify."
+      else
+        flash[ :error ] = "Access request failed.  Please try again."
+      end
+    end
+
+    redirect_referrer
   end
 
 end
