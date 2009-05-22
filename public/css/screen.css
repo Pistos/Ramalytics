@@ -1,8 +1,3 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
 h1,h2 {
   text-align: center;
 }
@@ -17,7 +12,7 @@ p + h3 {
 
 body {
   padding: 2em;
-  background: #CC6655;
+  background: #DD6655;
 }
 
 table#header {
@@ -98,11 +93,14 @@ table#referrers th {
 }
 
 #flash_success {
-    border-color: #006600;
-    color: #006600;
-    background: #EEFFEE;
-    padding: 1em;
-    margin-bottom: 1em;
+    border-color: #993300;
+    color: #993300;
+    background: #FFDDAA;
+}
+#flash_error {
+    border-color: #660000;
+    color: #660000;
+    background: #FFEEEE;
 }
 
 #nav {
