@@ -70,3 +70,15 @@ CREATE OR REPLACE VIEW referrers AS
     ORDER BY
         uri
 ;
+
+CREATE OR REPLACE VIEW search_engine_paths AS
+    SELECT
+          se.id
+        , sps.subdomain_path || '?' || se.search_param || '=' AS path
+    FROM
+          subdomain_path_strings sps
+        , search_engines se
+    WHERE
+        sps.id = se.subdomain_path_id
+
+;

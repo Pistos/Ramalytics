@@ -70,3 +70,8 @@ CREATE TABLE referrer_sightings (
     UNIQUE( uri_id, user_id )
 );
 
+CREATE TABLE search_engines (
+    id                SERIAL  PRIMARY KEY,
+    subdomain_path_id INTEGER NOT NULL REFERENCES subdomain_paths( id ),
+    search_param      VARCHAR( 64 ) NOT NULL
+);

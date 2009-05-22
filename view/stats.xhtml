@@ -7,6 +7,9 @@
 <thead><tr>
   <th>Mark Seen</th>
   <th>Mark<br/>Domain<br/>Seen</th>
+  <?r if user.admin? ?>
+  <th>Learn<br/>Search</th>
+  <?r end ?>
   <th>URI</th>
 </tr></thead>
 
@@ -15,6 +18,9 @@
   <tr>
   <td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
   <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
+  <?r if user.admin? ?>
+  <td><a href="#{SearchEngineController.r( :add, r.uri_id )}"><img src="/images/checkmark.png" alt="Set as search engine"/></a></td>
+  <?r end ?>
   <td><a href="#{ r.uri }">#{ r.uri[ 0..200 ] }</a></td>
   </tr>
 

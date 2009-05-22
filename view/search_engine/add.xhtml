@@ -1,0 +1,9 @@
+<h3>Adding Search Engine:<br/>#{@subdomain_path}</h3>
+
+<p>Select the query parameter which corresponds to the search terms:</p>
+<ul>
+<?r @query_params.each do |p| ?>
+<li>#{ a p, r( :add, @uri.id, p.split( '=', 2 )[ 0 ] ) }</li>
+<?r end ?>
+</ul>
+

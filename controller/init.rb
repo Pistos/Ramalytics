@@ -7,3 +7,4 @@ end
 require 'controller/main'
 require 'controller/seen'
 require 'controller/site'
+require 'controller/search_engine'
