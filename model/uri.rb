@@ -22,7 +22,6 @@ module Ramalytics
 
     def self.parse_and_ensure_exists( s )
       parse_result = parse( s )
-      Ramaze::Log.info( parse_result )
       return nil  if parse_result.nil? || parse_result[ 0..3 ].include?( nil )
       protocol, subdomainname, domainname, tld_ext, path, query = parse_result
 
