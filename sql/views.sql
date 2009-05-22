@@ -1,22 +1,31 @@
-CREATE OR REPLACE VIEW uri_strings AS
-    SELECT DISTINCT
-          u.id
-        , u.protocol ||
-            CASE
-                WHEN sd.name <> '' THEN sd.name || '.'
-                ELSE ''
-            END || d.name || '.' || t.tld ||
-            u.path || COALESCE( u.query, '' )
-        AS uri
+CREATE OR REPLACE VIEW subdomain_strings AS
+    SELECT
+          sd.id
+        , CASE
+            WHEN sd.name <> '' THEN sd.name || '.'
+            ELSE ''
+        END || d.name || '.' || t.tld  AS subdomain
     FROM
-          uris u
-        , subdomains sd
+          subdomains sd
         , domains d
         , tlds t
     WHERE
-        sd.id = u.subdomain_id
-        AND d.id = sd.domain_id
+        d.id = sd.domain_id
         AND t.id = d.tld_id
+    ORDER BY
+        subdomain
+;
+
+CREATE OR REPLACE VIEW uri_strings AS
+    SELECT DISTINCT
+          u.id
+        , u.protocol || sds.subdomain || u.path || COALESCE( u.query, '' )
+        AS uri
+    FROM
+          uris u
+        , subdomain_strings sds
+    WHERE
+        sds.id = u.subdomain_id
     ORDER BY
         uri
 ;
