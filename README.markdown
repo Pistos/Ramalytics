@@ -42,10 +42,16 @@ just used all my familiar tools and technologies.
 4. Execute schema.sql into your database.
 5. Execute views.sql into your database.
 6. Run start.rb with your version 1.9 ruby binary.  e.g. ruby19 start.rb
-7. Insert this snippet before the closing </body> tag on every page or layout
-you want to track on:
-<script src="http://ram.purepistos.net/ramalytics.js"></script>
-Of course, substitute the domain with your own.
+
+### Getting Started
+
+1. Visit your site, and register a new account.
+2. Login and go to your Account page.
+3. Create a tracker for each website you want to track.
+4. Insert this snippet before the closing </body> tag on every page or layout
+you want to track on: <script src="http://ram.purepistos.net/ramalytics.js"></script>
+5. Wait for stats to build up, then check your home page.
+
 
 [1]: # "Not an actual search engine.  I know you wanted to google that, but don't
 bother."
