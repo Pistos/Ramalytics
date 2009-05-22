@@ -9,6 +9,7 @@ $dbh = DBI.connect(
 require 'model/tld'
 require 'model/domain'
 require 'model/subdomain'
+require 'model/subdomain_path'
 require 'model/uri'
 require 'model/hit'
 require 'model/user'

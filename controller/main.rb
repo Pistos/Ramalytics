@@ -26,7 +26,22 @@ class MainController < Controller
       redirect_referrer
     end
 
-    @referrers = Referrer.where( user_id: user.id, subdomain_id: subdomain_id.to_i, seen: false )
+    @referrers = Referrer.s(
+      %{
+        SELECT
+          r.*
+        FROM
+            referrers r
+          , subdomain_paths sp
+        WHERE
+          r.user_id = ?
+          AND r.seen = FALSE
+          AND r.subdomain_path_id = sp.id
+          AND sp.subdomain_id = ?
+      },
+      user.id,
+      @subdomain.id
+    )
   end
 
   define_method 'ramalytics.js' do
@@ -120,6 +135,5 @@ class MainController < Controller
   def account
     redirect_referrer  if ! logged_in?
   end
-
 
 end

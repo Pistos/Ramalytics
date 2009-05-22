@@ -16,16 +16,30 @@ CREATE OR REPLACE VIEW subdomain_strings AS
         subdomain
 ;
 
+CREATE OR REPLACE VIEW subdomain_path_strings AS
+    SELECT DISTINCT
+          sps.id
+        , sps.protocol || sds.subdomain || sps.path
+        AS subdomain_path
+    FROM
+          subdomain_paths sps
+        , subdomain_strings sds
+    WHERE
+        sds.id = sps.subdomain_id
+    ORDER BY
+        subdomain_path
+;
+
 CREATE OR REPLACE VIEW uri_strings AS
     SELECT DISTINCT
           u.id
-        , u.protocol || sds.subdomain || u.path || COALESCE( u.query, '' )
+        , sps.subdomain_path || COALESCE( u.query, '' )
         AS uri
     FROM
           uris u
-        , subdomain_strings sds
+        , subdomain_path_strings sps
     WHERE
-        sds.id = u.subdomain_id
+        sps.id = u.subdomain_path_id
     ORDER BY
         uri
 ;
@@ -33,7 +47,7 @@ CREATE OR REPLACE VIEW uri_strings AS
 CREATE OR REPLACE VIEW referrers AS
     SELECT DISTINCT
           h.referrer_uri_id AS uri_id
-        , u.subdomain_id
+        , u.subdomain_path_id
         , us.uri
         , users.id AS user_id
         , EXISTS(

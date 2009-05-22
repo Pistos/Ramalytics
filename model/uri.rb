@@ -28,11 +28,15 @@ module Ramalytics
       tld = TLD.find_or_create( tld: tld_ext )
       domain = Domain.find_or_create( tld_id: tld.id, name: domainname )
       subdomain = Subdomain.find_or_create( domain_id: domain.id, name: subdomainname )
-      find_or_create( protocol: protocol, subdomain_id: subdomain.id, path: path, query: query )
+      subdomain_path = SubdomainPath.find_or_create( protocol: protocol, subdomain_id: subdomain.id, path: path )
+      find_or_create( subdomain_path_id: subdomain_path.id, query: query )
     end
 
     def subdomain
-      Subdomain[ subdomain_id ]
+      p = SubdomainPath[ subdomain_path_id ]
+      if p
+        Subdomain[ p.subdomain_id ]
+      end
     end
   end
 
