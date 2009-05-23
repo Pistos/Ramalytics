@@ -26,23 +26,6 @@ class MainController < Controller
       redirect_referrer
     end
 
-    @referrers = Referrer.s(
-      %{
-        SELECT
-          r.*
-        FROM
-            referrers r
-          , subdomain_paths sp
-        WHERE
-          r.user_id = ?
-          AND r.seen = FALSE
-          AND r.subdomain_path_id = sp.id
-          AND sp.subdomain_id = ?
-      },
-      user.id,
-      @subdomain.id
-    )
-
     @searches = Search.s(
       %{
         SELECT
@@ -61,6 +44,24 @@ class MainController < Controller
       user.id,
       @subdomain.id
     )
+
+    @referrers = Referrer.s(
+      %{
+        SELECT
+          r.*
+        FROM
+            referrers r
+          , subdomain_paths sp
+        WHERE
+          r.user_id = ?
+          AND r.seen = FALSE
+          AND r.subdomain_path_id = sp.id
+          AND sp.subdomain_id = ?
+      },
+      user.id,
+      @subdomain.id
+    ).reject { |r| @searches.find { |s| s.uri_id == r.uri_id } }
+
   end
 
   define_method 'ramalytics.js' do
