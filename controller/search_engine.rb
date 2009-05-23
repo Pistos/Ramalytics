@@ -19,7 +19,7 @@ class SearchEngineController < Controller
 
     if search_param.nil?
       @subdomain_path = SubdomainPath[ @uri.subdomain_path_id ]
-      @query_params = @uri.query.split( '&' ).map { |p| /^\?/ === p ? p[ 1..-1 ] : p }
+      @query_params = @uri.query_params
     else
       begin
         SearchEngine.create(

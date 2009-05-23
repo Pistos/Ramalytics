@@ -48,6 +48,7 @@ CREATE OR REPLACE VIEW referrers AS
     SELECT DISTINCT
           h.referrer_uri_id AS uri_id
         , u.subdomain_path_id
+        , ru.subdomain_path_id AS referrer_subdomain_path_id
         , us.uri
         , users.id AS user_id
         , EXISTS(
@@ -61,11 +62,13 @@ CREATE OR REPLACE VIEW referrers AS
     FROM
           hits h
         , uris u
+        , uris ru
         , uri_strings us
         , users
     WHERE
         h.referrer_uri_id IS NOT NULL
         AND u.id = h.uri_id
+        AND ru.id = h.referrer_uri_id
         AND us.id = h.referrer_uri_id
     ORDER BY
         uri
@@ -81,4 +84,26 @@ CREATE OR REPLACE VIEW search_engine_paths AS
     WHERE
         sps.id = se.subdomain_path_id
 
+;
+
+CREATE OR REPLACE VIEW searches AS
+    SELECT DISTINCT
+          r.user_id
+        , r.uri_id
+        , r.seen
+        , sep.path
+        , substring( u.query from '(?:^' || E'\\' || '?|&)q=([^&]+)&' ) AS terms
+    FROM
+          referrers r
+        , search_engines se
+        , search_engine_paths sep
+        , uris u
+    WHERE
+        r.seen = FALSE
+        AND se.subdomain_path_id = r.referrer_subdomain_path_id
+        AND sep.id = se.id
+        AND u.id = r.uri_id
+    ORDER BY
+        path,
+        terms
 ;

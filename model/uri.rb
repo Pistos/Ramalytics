@@ -38,6 +38,10 @@ module Ramalytics
         Subdomain[ p.subdomain_id ]
       end
     end
+
+    def query_params
+      query[ 1..-1 ].split( '&' )
+    end
   end
 
 end

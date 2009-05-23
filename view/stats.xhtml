@@ -15,16 +15,38 @@
 
 <?r @referrers.each do |r| ?>
 
-  <tr>
+<tbody><tr>
   <td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
   <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
   <?r if user.admin? ?>
   <td><a href="#{SearchEngineController.r( :add, r.uri_id )}"><img src="/images/checkmark.png" alt="Set as search engine"/></a></td>
   <?r end ?>
   <td><a href="#{ r.uri }">#{ r.uri[ 0..200 ] }</a></td>
-  </tr>
+</tr></tbody>
 
 <?r end ?>
 
 </table>
 
+
+<h4>Searches</h4>
+
+<table id="searches" class="table">
+
+<thead><tr>
+  <th>Mark Seen</th>
+  <th>Search</th>
+  <th>Search Terms</th>
+</tr></thead>
+
+<?r @searches.each do |s| ?>
+
+<tbody><tr>
+  <td><a href="#{SeenController.r( 'referrer', s.uri_id )}"><img src="/images/red-x.png"/></a></td>
+  <td>#{s.path}</td>
+  <td>#{s.terms}</td>
+</tr></tbody>
+
+<?r end ?>
+
+</table>

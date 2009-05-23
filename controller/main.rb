@@ -42,6 +42,8 @@ class MainController < Controller
       user.id,
       @subdomain.id
     )
+
+    @searches = Search.where( user_id: user.id, seen: false )
   end
 
   define_method 'ramalytics.js' do

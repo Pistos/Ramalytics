@@ -65,7 +65,8 @@ table#header td {
     margin-top: 3em;
 }
 #footer a {
-    color: #330000;
+    color: #CC9999;
+    text-decoration: none;
 }
 
 p {
@@ -97,11 +98,11 @@ table.table td, table.table th {
     padding: 0.5em;
 }
 
-table#referrers {
+table#referrers, table#searches {
     font-size: 12px;
 }
 
-table#referrers th {
+table#referrers th, table#searches th {
     vertical-align: bottom;
     text-align: left;
 }

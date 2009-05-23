@@ -18,3 +18,4 @@ require 'model/referrer_sighting'
 require 'model/search_engine'
 
 require 'model/referrer'
+require 'model/search'

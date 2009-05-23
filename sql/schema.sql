@@ -71,7 +71,8 @@ CREATE TABLE referrer_sightings (
 );
 
 CREATE TABLE search_engines (
-    id                SERIAL  PRIMARY KEY,
-    subdomain_path_id INTEGER NOT NULL REFERENCES subdomain_paths( id ),
-    search_param      VARCHAR( 64 ) NOT NULL
+      id                SERIAL  PRIMARY KEY
+    , subdomain_path_id INTEGER NOT NULL REFERENCES subdomain_paths( id )
+    , search_param      VARCHAR( 64 ) NOT NULL
+    , UNIQUE( subdomain_path_id, search_param )
 );
