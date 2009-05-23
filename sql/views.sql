@@ -47,6 +47,7 @@ CREATE OR REPLACE VIEW uri_strings AS
 CREATE OR REPLACE VIEW referrers AS
     SELECT DISTINCT
           h.referrer_uri_id AS uri_id
+        , h.uri_id AS hit_uri_id
         , u.subdomain_path_id
         , ru.subdomain_path_id AS referrer_subdomain_path_id
         , us.uri
@@ -90,6 +91,7 @@ CREATE OR REPLACE VIEW searches AS
     SELECT DISTINCT
           r.user_id
         , r.uri_id
+        , r.hit_uri_id
         , r.seen
         , sep.path
         , substring( u.query from '(?:^' || E'\\' || '?|&)q=([^&]+)&' ) AS terms
