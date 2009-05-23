@@ -44,7 +44,7 @@
 <tbody><tr>
   <td><a href="#{SeenController.r( 'referrer', s.uri_id )}"><img src="/images/red-x.png"/></a></td>
   <td>#{s.path}</td>
-  <td>#{s.terms}</td>
+  <td><a href="#{s.path}#{CGI.escape(s.terms)}">#{s.terms}</a></td>
 </tr></tbody>
 
 <?r end ?>
