@@ -31,7 +31,7 @@ class SeenController < Controller
           FROM
             uris u
           WHERE
-            u.subdomain_id = ?
+            u.subdomain_path_id = ?
             AND NOT EXISTS(
               SELECT 1
               FROM referrer_sightings rs
@@ -42,7 +42,7 @@ class SeenController < Controller
             )
         },
         user.id,
-        uri.subdomain_id,
+        uri.subdomain_path_id,
         user.id
       )
       if num_inserted > 0
