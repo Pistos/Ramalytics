@@ -33,10 +33,7 @@ module Ramalytics
     end
 
     def subdomain
-      p = SubdomainPath[ subdomain_path_id ]
-      if p
-        Subdomain[ p.subdomain_id ]
-      end
+      Subdomain[ SubdomainPath[ subdomain_path_id ].subdomain_id ]
     end
 
     def query_params
