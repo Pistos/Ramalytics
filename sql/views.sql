@@ -94,7 +94,7 @@ CREATE OR REPLACE VIEW searches AS
         , r.hit_uri_id
         , r.seen
         , sep.path
-        , substring( u.query from '(?:^' || E'\\' || '?|&)q=([^&]+)(?:&|$)' ) AS terms
+        , substring( u.query from '(?:^' || E'\\' || '?|&)' || se.search_param || '=([^&]+)(?:&|$)' ) AS terms
     FROM
           referrers r
         , search_engines se
