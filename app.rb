@@ -8,6 +8,7 @@ require 'ramaze'
 require 'digest/sha1'
 require 'cgi'
 require 'open-uri'
+require 'json'
 
 # Add the directory this file resides in to the load path, so you can run the
 # app from any other working directory

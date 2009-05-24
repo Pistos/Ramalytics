@@ -96,6 +96,7 @@ table.table {
 table.table td, table.table th {
     border: 1px solid #000000;
     padding: 0.5em;
+    overflow: hidden;
 }
 
 table#referrers, table#searches {
@@ -107,18 +108,25 @@ table#referrers th, table#searches th {
     text-align: left;
 }
 
-.flash {
+.flash, .message {
     border: 1px solid;
     padding: 1em;
     margin-bottom: 1em;
 }
+.message {
+    display: none;
+    position: fixed;
+    top: 2em;
+    left: 88px;
+    width: 60%;
+}
 
-#flash_success {
+#flash_success, #message-success {
     border-color: #993300;
     color: #993300;
     background: #FFDDAA;
 }
-#flash_error {
+#flash_error, #message-error {
     border-color: #660000;
     color: #660000;
     background: #FFEEEE;

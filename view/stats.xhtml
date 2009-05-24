@@ -16,7 +16,7 @@
 <?r @referrers.each do |r| ?>
 
 <tbody><tr>
-  <td><a href="#{SeenController.r( 'referrer', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
+  <td><a class="mark-seen-referrer" uri-id="#{r.uri_id}" href="#"><img src="/images/red-x.png"/></a></td>
   <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
   <?r if user.admin? ?>
   <td><a href="#{SearchEngineController.r( :add, r.uri_id )}"><img src="/images/checkmark.png" alt="Set as search engine"/></a></td>
@@ -42,7 +42,7 @@
 <?r @searches.each do |s| ?>
 
 <tbody><tr>
-  <td><a href="#{SeenController.r( 'referrer', s.uri_id )}"><img src="/images/red-x.png"/></a></td>
+  <td><a class="mark-seen-referrer" uri-id="#{s.uri_id}" href="#"><img src="/images/red-x.png"/></a></td>
   <td>#{s.path}</td>
   <td><a href="#{s.path}#{CGI.escape(s.terms)}">#{s.terms}</a></td>
 </tr></tbody>

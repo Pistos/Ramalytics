@@ -1,20 +1,22 @@
 class SeenController < Controller
 
+  layout nil
+  provide( :json, :type => 'application/json' ) { |action, value| value.to_json }
   helper :user
 
-  def referrer( uri_id )
+  def referrer
+    data = JSON.parse( request[ 'json' ] )
+    uri_id = data[ 'uri_id' ]
     uri = Ramalytics::URI[ uri_id.to_i ]
     if uri
       ReferrerSighting.create(
         uri_id: uri.id,
         user_id: user.id
       )
-      flash[ :success ] = 'Marked URI as seen.'
+      { success: 'Marked URI as seen.' }
     else
-      flash[ :error ] = "No URI with id #{uri_id}."
+      { error: "No URI with id #{uri_id}." }
     end
-
-    redirect_referrer
   end
 
   def referrer_domain( uri_id )
