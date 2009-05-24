@@ -41,7 +41,7 @@
           <a href="/logout">Logout</a>
 
           <select name="site" id="site-picker">
-          <?r user.tracked_sites.sort_by { |s| s.subdomain.to_s }.each do |s| ?>
+          <?r user.tracked_sites.each do |s| ?>
             <option value="#{s.subdomain_id}">#{s.subdomain}</option>
           <?r end ?>
 

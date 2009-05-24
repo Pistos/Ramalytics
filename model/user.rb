@@ -27,10 +27,25 @@ class User < DBI::Model( :users )
 
   def tracked_sites
     if admin?
-      SubdomainAccess.all
+      sites = SubdomainAccess.all
     else
-      SubdomainAccess.where( user_id: self.id )
+      sites = SubdomainAccess.where( user_id: self.id )
     end
+    sites.sort { |x,y|
+      ax = x.subdomain.to_s.split( '.' )
+      ay = y.subdomain.to_s.split( '.' )
+      i = -1
+      while ax[ i ] && ay[ i ] && ax[ i ] == ay[ i ]
+        i -= 1
+      end
+      if ax[ i ] && ay[ i ]
+        ax[ i ] <=> ay[ i ]
+      elsif ax[ i ]
+        1
+      else
+        -1
+      end
+    }
   end
 
   def admin?
