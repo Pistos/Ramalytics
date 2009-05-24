@@ -16,12 +16,12 @@ class SiteController < Controller
       redirect_referrer
     end
 
-    access = SubdomainAccess[ subdomain_id: uri.subdomain_id, user_id: user.id ]
+    access = SubdomainAccess[ subdomain_id: uri.subdomain.id, user_id: user.id ]
     if access
       flash[ :error ] = 'You already have or requested access to that subdomain.'
     else
       access = SubdomainAccess.create(
-        subdomain_id: uri.subdomain_id,
+        subdomain_id: uri.subdomain.id,
         user_id: user.id,
         challenge: 'ramalytics-' + Digest::SHA1.hexdigest( Ramalytics.options.salt + Time.now.to_s )[ 0..16 ] + '.html'
       )
