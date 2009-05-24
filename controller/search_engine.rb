@@ -10,6 +10,9 @@ class SearchEngineController < Controller
 
   def add( uri_id, search_param = nil )
     redirect_referrer  if ! logged_in? || ! user.admin?
+    if ! inside_stack?
+      push request.referrer
+    end
 
     @uri = Ramalytics::URI[ uri_id.to_i ]
     if @uri.nil?
@@ -26,11 +29,12 @@ class SearchEngineController < Controller
           subdomain_path_id: @uri.subdomain_path_id,
           search_param: search_param
         )
+        flash[ :success ] = "Search engine added."
       rescue DBI::ProgrammingError => e
         Ramaze::Log.info e
         flash[ :error ] = "Search engine already added."
       end
-      redirect r( :index )
+      answer
     end
 
   end
