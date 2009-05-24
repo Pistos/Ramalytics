@@ -52,4 +52,8 @@ class User < DBI::Model( :users )
     admin
   end
 
+  def can_access?( subdomain )
+    !! SubdomainAccess[ user_id: self.id, subdomain_id: subdomain.id, challenge: nil ]
+  end
+
 end

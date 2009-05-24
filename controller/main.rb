@@ -26,6 +26,11 @@ class MainController < Controller
       redirect_referrer
     end
 
+    if ! user.can_access? @subdomain
+      flash[ :error ] = "You do not have access to that subdomain."
+      redirect_referrer
+    end
+
     @searches = Search.s(
       %{
         SELECT
