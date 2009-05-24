@@ -10,5 +10,6 @@ module Ramalytics
       o 'Database password', :password, 'ramalytics'
     end
     o 'Encryption salt', :salt, 'the most random string you can think of'
+    o 'Public example subdomain_id', :example_subdomain_id, 0
   end
 end

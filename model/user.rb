@@ -29,7 +29,8 @@ class User < DBI::Model( :users )
     if admin?
       sites = SubdomainAccess.all
     else
-      sites = SubdomainAccess.where( user_id: self.id )
+      sites = SubdomainAccess.where( user_id: self.id ) +
+        SubdomainAccess.where( subdomain_id: Ramalytics.options.example_subdomain_id )
     end
     sites.sort { |x,y|
       ax = x.subdomain.to_s.split( '.' )

@@ -26,7 +26,10 @@ class MainController < Controller
       redirect_referrer
     end
 
-    if ! user.can_access? @subdomain
+    if(
+      ! user.can_access?( @subdomain ) &&
+      @subdomain.id != Ramalytics.options.example_subdomain_id
+    )
       flash[ :error ] = "You do not have access to that subdomain."
       redirect_referrer
     end
