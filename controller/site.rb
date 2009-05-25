@@ -81,9 +81,11 @@ class SiteController < Controller
       return { 'error' => "Search engine not set up for page rank yet." }
     end
 
+    num = 100
     rank = nil
     terms = ::CGI.escape( data[ 'search_terms' ] )
-    doc = Hpricot( open( "#{se.search_uri}#{terms}&#{se.num_param}=100" ) )
+    search_url = "#{se.search_uri}#{terms}&#{se.num_param}=#{num}"
+    doc = Hpricot( open( search_url ) )
     doc.search( se.link_selector ).each_with_index do |link,index|
       href = link[ 'href' ]
       if href.include? site.subdomain.to_s
@@ -94,7 +96,7 @@ class SiteController < Controller
 
     {
       'success' => true,
-      'result' => rank || 'unranked',
+      'result' => rank || ">#{num}",
     }
   end
 end
