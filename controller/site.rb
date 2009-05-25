@@ -57,21 +57,32 @@ class SiteController < Controller
     redirect_referrer
   end
 
-  def page_rank( site_id, search_engine_id, search_terms )
+  def page_rank
     if ! logged_in?
-      redirect MainController.r( :login )
+      return { 'error' => "Not logged in." }
     end
 
-    site = SubdomainAccess[ id: site_id, user_id: user.id ]
+    data = JSON.parse( request[ 'json' ] )
+
+    subdomain_path_id = data[ 'subdomain_path_id' ].to_i
+    sp = SubdomainPath[ subdomain_path_id ]
+    if sp.nil?
+      return { 'error' => "Could not determine what site to verify." };
+    end
+
+    site = SubdomainAccess[ subdomain_id: sp.subdomain.id, user_id: user.id ]
     if site.nil?
-      flash[ :error ] = "Could not determine what site to verify."
-      redirect_referrer
+      return { 'error' => "Could not determine what site to verify." }
     end
 
-    se = SearchEngine[ search_engine_id.to_i ]
+    search_engine_id = data[ 'search_engine_id' ].to_i
+    se = SearchEngine[ search_engine_id ]
+    if ! se.link_selector
+      return { 'error' => "Search engine not set up for page rank yet." }
+    end
 
     rank = nil
-    terms = ::CGI.escape( search_terms )
+    terms = ::CGI.escape( data[ 'search_terms' ] )
     doc = Hpricot( open( "#{se.search_uri}#{terms}&#{se.num_param}=100" ) )
     doc.search( se.link_selector ).each_with_index do |link,index|
       href = link[ 'href' ]
@@ -81,6 +92,9 @@ class SiteController < Controller
       end
     end
 
-    rank
+    {
+      'success' => true,
+      'result' => rank || 'unranked',
+    }
   end
 end

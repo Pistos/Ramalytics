@@ -9,4 +9,8 @@ class SubdomainPath < DBI::Model( :subdomain_paths )
       self.id
     )
   end
+
+  def subdomain
+    Subdomain[ subdomain_id ]
+  end
 end

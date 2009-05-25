@@ -93,6 +93,8 @@ CREATE OR REPLACE VIEW searches AS
         , r.uri_id
         , r.hit_uri_id
         , r.seen
+        , r.subdomain_path_id
+        , se.id AS search_engine_id
         , sep.path
         , substring( u.query from '(?:^' || E'\\' || '?|&)' || se.search_param || '=([^&]+)(?:&|$)' ) AS terms
     FROM

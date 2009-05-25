@@ -9,7 +9,7 @@ function show_result_messages( json ) {
         $( '#message-error' ).text( json.error ).slideDown();
         hide_shortly( $( '#message-error' ) );
     }
-    if( json.success ) {
+    if( json.success && json.success != true ) {
         $( '#message-success' ).text( json.success ).slideDown();
         hide_shortly( $( '#message-success' ) );
     }
@@ -55,6 +55,29 @@ $( document ).ready( function() {
             function( response ) {
                 if( response.success ) {
                     slideUp_tr( button.closest( 'tr' ) );
+                }
+                show_result_messages( response );
+            },
+            'json'
+        );
+        return false;
+    } );
+
+    $( 'a.get-page-rank' ).click( function() {
+        var button = $(this);
+        $.post(
+            '/site/page_rank.json',
+            { json: $.toJSON(
+                {
+                    subdomain_path_id: button.attr( 'subdomain-path-id' ),
+                    search_engine_id: button.attr( 'search-engine-id' ),
+                    search_terms: button.attr( 'search-terms' )
+                }
+            ) },
+            function( response ) {
+                if( response.result ) {
+                    button.prev().text( response.result );
+                    button.text( 'refresh' );
                 }
                 show_result_messages( response );
             },

@@ -37,6 +37,7 @@
   <th>Mark Seen</th>
   <th>Search</th>
   <th>Search Terms</th>
+  <th>Page Rank</th>
 </tr></thead>
 
 <?r @searches.each do |s| ?>
@@ -45,6 +46,16 @@
   <td><a class="mark-seen-referrer" uri-id="#{s.uri_id}" href="#"><img src="/images/red-x.png"/></a></td>
   <td>#{s.path}</td>
   <td><a href="#{s.path}#{CGI.escape(s.terms)}">#{s.terms}</a></td>
+  <td>
+    <span class="page-rank"></span>
+    <a
+      class="get-page-rank"
+      subdomain-path-id="#{s.subdomain_path_id}"
+      search-engine-id="#{s.search_engine_id}"
+      search-terms="#{s.terms}"
+      href="#"
+    >fetch</a>
+  </td>
 </tr></tbody>
 
 <?r end ?>

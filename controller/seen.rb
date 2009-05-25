@@ -1,7 +1,6 @@
 class SeenController < Controller
 
   layout nil
-  provide( :json, :type => 'application/json' ) { |action, value| value.to_json }
   helper :user
 
   def referrer
