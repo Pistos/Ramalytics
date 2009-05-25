@@ -108,6 +108,10 @@ table#referrers th, table#searches th {
     text-align: left;
 }
 
+td.domainname {
+    text-align: right;
+}
+
 .flash, .message {
     border: 1px solid;
     padding: 1em;
