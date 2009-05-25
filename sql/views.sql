@@ -84,7 +84,19 @@ CREATE OR REPLACE VIEW search_engine_paths AS
         , search_engines se
     WHERE
         sps.id = se.subdomain_path_id
+;
 
+CREATE OR REPLACE VIEW search_engine_path_links AS
+    SELECT
+          sep.id
+        , CASE
+            WHEN sep.path LIKE '%google.%' THEN
+                regexp_replace( sep.path, '/url' || E'\\' || '?q=$', '/search?q=' )
+            ELSE
+            sep.path
+        END AS path_link
+    FROM
+        search_engine_paths sep
 ;
 
 CREATE OR REPLACE VIEW searches AS
@@ -96,16 +108,19 @@ CREATE OR REPLACE VIEW searches AS
         , r.subdomain_path_id
         , se.id AS search_engine_id
         , sep.path
+        , sepl.path_link
         , substring( u.query from '(?:^' || E'\\' || '?|&)' || se.search_param || '=([^&]+)(?:&|$)' ) AS terms
     FROM
           referrers r
         , search_engines se
         , search_engine_paths sep
+        , search_engine_path_links sepl
         , uris u
     WHERE
         r.seen = FALSE
         AND se.subdomain_path_id = r.referrer_subdomain_path_id
         AND sep.id = se.id
+        AND sepl.id = se.id
         AND u.id = r.uri_id
     ORDER BY
         path,

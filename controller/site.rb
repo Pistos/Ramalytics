@@ -84,18 +84,26 @@ class SiteController < Controller
     rank = nil
     terms = ::CGI.escape( data[ 'search_terms' ] )
     search_url = "#{se.search_uri}#{terms}&#{se.num_param}=#{num}"
-    doc = Hpricot( open( search_url ) )
-    doc.search( se.link_selector ).each_with_index do |link,index|
-      href = link[ 'href' ]
-      if href.include? sp.subdomain.to_s
-        rank = index + 1
-        break
+
+    begin
+      doc = Hpricot( open( search_url ) )
+      doc.search( se.link_selector ).each_with_index do |link,index|
+        href = link[ 'href' ]
+        if href.include? sp.subdomain.to_s
+          rank = index + 1
+          break
+        end
       end
+
+      {
+        'success' => true,
+        'result' => rank || ">#{num}",
+      }
+    rescue OpenURI::HTTPError => e
+      Ramaze::Log.error "Failed to check page rank at #{search_url}\ndata: #{data.inspect}"
+      Ramaze::Log.error e
+      { 'error' => 'Failed to check page rank.' }
     end
 
-    {
-      'success' => true,
-      'result' => rank || ">#{num}",
-    }
   end
 end

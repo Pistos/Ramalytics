@@ -2,8 +2,8 @@ class SearchEngine < DBI::Model( :search_engines )
   def search_uri
     $dbh.sc(
       %{
-        SELECT path
-        FROM search_engine_paths
+        SELECT path_link
+        FROM search_engine_path_links
         WHERE id = ?
       },
       self.id
