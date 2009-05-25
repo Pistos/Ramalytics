@@ -70,8 +70,7 @@ class SiteController < Controller
       return { 'error' => "Could not determine what site to verify." };
     end
 
-    site = SubdomainAccess[ subdomain_id: sp.subdomain.id, user_id: user.id ]
-    if site.nil?
+    if ! user.can_access?( sp.subdomain )
       return { 'error' => "Could not determine what site to verify." }
     end
 
@@ -88,7 +87,7 @@ class SiteController < Controller
     doc = Hpricot( open( search_url ) )
     doc.search( se.link_selector ).each_with_index do |link,index|
       href = link[ 'href' ]
-      if href.include? site.subdomain.to_s
+      if href.include? sp.subdomain.to_s
         rank = index + 1
         break
       end
