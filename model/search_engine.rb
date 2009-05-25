@@ -1,5 +1,5 @@
 class SearchEngine < DBI::Model( :search_engines )
-  def to_s
+  def search_uri
     $dbh.sc(
       %{
         SELECT path
@@ -8,5 +8,9 @@ class SearchEngine < DBI::Model( :search_engines )
       },
       self.id
     )
+  end
+
+  def to_s
+    search_uri
   end
 end

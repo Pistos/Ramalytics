@@ -1,6 +1,6 @@
 class SiteController < Controller
   map '/site'
-
+  layout nil
   helper :stack, :user
 
   def track
@@ -57,4 +57,30 @@ class SiteController < Controller
     redirect_referrer
   end
 
+  def page_rank( site_id, search_engine_id, search_terms )
+    if ! logged_in?
+      redirect MainController.r( :login )
+    end
+
+    site = SubdomainAccess[ id: site_id, user_id: user.id ]
+    if site.nil?
+      flash[ :error ] = "Could not determine what site to verify."
+      redirect_referrer
+    end
+
+    se = SearchEngine[ search_engine_id.to_i ]
+
+    rank = nil
+    terms = ::CGI.escape( search_terms )
+    doc = Hpricot( open( "#{se.search_uri}#{terms}&#{se.num_param}=100" ) )
+    doc.search( se.link_selector ).each_with_index do |link,index|
+      href = link[ 'href' ]
+      if href.include? site.subdomain.to_s
+        rank = index + 1
+        break
+      end
+    end
+
+    rank
+  end
 end
