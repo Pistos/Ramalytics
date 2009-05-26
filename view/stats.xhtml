@@ -8,7 +8,7 @@
 
 <thead><tr>
   <th>Mark #{ @seen ? 'Unseen' : 'Seen' }</th>
-  <th>Mark<br/>Domain<br/>Seen</th>
+  <th>Mark<br/>Domain<br/>#{ @seen ? 'Unseen' : 'Seen' }</th>
   <?r if user.admin? ?>
   <th>Learn<br/>Search</th>
   <?r end ?>
@@ -19,7 +19,7 @@
 
 <tbody><tr>
   <td><a class="mark-seen-referrer" uri-id="#{r.uri_id}" action="#{ @seen ? 'unseen' : 'seen' }" href="#"><img src="/images/red-x.png"/></a></td>
-  <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
+  <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id, @seen ? 'unseen' : 'seen' )}"><img src="/images/red-x.png"/></a></td>
   <?r if user.admin? ?>
   <td><a href="#{SearchEngineController.r( :add, r.uri_id )}"><img src="/images/checkmark.png" alt="Set as search engine"/></a></td>
   <?r end ?>
