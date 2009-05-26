@@ -34,7 +34,7 @@ class MainController < Controller
       redirect_referrer
     end
 
-    @searches = Search.s(
+    searches = Search.s(
       %{
         SELECT
           s.*
@@ -68,7 +68,18 @@ class MainController < Controller
       },
       user.id,
       @subdomain.id
-    ).reject { |r| @searches.find { |s| s.uri_id == r.uri_id } }
+    ).reject { |r| searches.find { |s| s.uri_id == r.uri_id } }
+
+    @searches = []
+    searches.each do |s|
+      found = @searches.find { |s2|
+        s2.search_engine_id == s.search_engine_id &&
+        s2.terms == s.terms
+      }
+      if ! found
+        @searches << s
+      end
+    end
 
   end
 
