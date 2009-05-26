@@ -7,7 +7,7 @@
 <table id="referrers" class="table">
 
 <thead><tr>
-  <th>Mark Seen</th>
+  <th>Mark #{ @seen ? 'Unseen' : 'Seen' }</th>
   <th>Mark<br/>Domain<br/>Seen</th>
   <?r if user.admin? ?>
   <th>Learn<br/>Search</th>
@@ -18,7 +18,7 @@
 <?r @referrers.each do |r| ?>
 
 <tbody><tr>
-  <td><a class="mark-seen-referrer" uri-id="#{r.uri_id}" href="#"><img src="/images/red-x.png"/></a></td>
+  <td><a class="mark-seen-referrer" uri-id="#{r.uri_id}" action="#{ @seen ? 'unseen' : 'seen' }" href="#"><img src="/images/red-x.png"/></a></td>
   <td><a href="#{SeenController.r( 'referrer_domain', r.uri_id )}"><img src="/images/red-x.png"/></a></td>
   <?r if user.admin? ?>
   <td><a href="#{SearchEngineController.r( :add, r.uri_id )}"><img src="/images/checkmark.png" alt="Set as search engine"/></a></td>
@@ -36,7 +36,7 @@
 <table id="searches" class="table">
 
 <thead><tr>
-  <th>Mark Seen</th>
+  <th>Mark #{ @seen ? 'Unseen' : 'Seen' }</th>
   <th>Search</th>
   <th>Search Terms</th>
   <th>Page Rank</th>
@@ -45,7 +45,7 @@
 <?r @searches.each do |s| ?>
 
 <tbody><tr>
-  <td><a class="mark-seen-search" search-engine-id="#{s.search_engine_id}" terms="#{s.terms}" href="#"><img src="/images/red-x.png"/></a></td>
+  <td><a class="mark-seen-search" search-engine-id="#{s.search_engine_id}" terms="#{s.terms}"  action="#{ @seen ? 'unseen' : 'seen' }" href="#"><img src="/images/red-x.png"/></a></td>
   <td>#{s.path}</td>
   <td><a href="#{s.path_link}#{CGI.escape(CGI.unescape(s.terms))}">#{CGI.unescape(s.terms)}</a></td>
   <td>

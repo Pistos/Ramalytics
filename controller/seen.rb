@@ -8,11 +8,29 @@ class SeenController < Controller
     uri_id = data[ 'uri_id' ]
     uri = Ramalytics::URI[ uri_id.to_i ]
     if uri
-      ReferrerSighting.create(
-        uri_id: uri.id,
-        user_id: user.id
-      )
-      { success: 'Marked URI as seen.' }
+      if data[ 'action' ] == 'seen'
+        ReferrerSighting.create(
+          uri_id: uri.id,
+          user_id: user.id
+        )
+        { success: 'Marked URI as seen.' }
+      elsif data[ 'action' ] == 'unseen'
+        num_deleted = $dbh.d(
+          %{
+            DELETE FROM referrer_sightings
+            WHERE
+              uri_id = ?
+              AND user_id = ?
+          },
+          uri.id,
+          user.id
+        )
+        if num_deleted > 0
+          { success: 'Marked URI as unseen.' }
+        else
+          { error: 'Failed to mark URI as unseen.' }
+        end
+      end
     else
       { error: "No URI with id #{uri_id}." }
     end

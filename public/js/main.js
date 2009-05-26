@@ -51,7 +51,12 @@ $( document ).ready( function() {
         var button = $(this);
         $.post(
             '/seen/referrer.json',
-            { json: $.toJSON( { uri_id: button.attr( 'uri-id' ) } ) },
+            {
+                json: $.toJSON( {
+                    uri_id: button.attr( 'uri-id' ),
+                    action: button.attr( 'action' )
+                } )
+            },
             function( response ) {
                 if( response.success ) {
                     slideUp_tr( button.closest( 'tr' ) );
