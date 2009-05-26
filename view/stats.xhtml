@@ -43,7 +43,7 @@
 <?r @searches.each do |s| ?>
 
 <tbody><tr>
-  <td><a class="mark-seen-referrer" uri-id="#{s.uri_id}" href="#"><img src="/images/red-x.png"/></a></td>
+  <td><a class="mark-seen-search" search-engine-id="#{s.search_engine_id}" terms="#{s.terms}" href="#"><img src="/images/red-x.png"/></a></td>
   <td>#{s.path}</td>
   <td><a href="#{s.path_link}#{CGI.escape(CGI.unescape(s.terms))}">#{CGI.unescape(s.terms)}</a></td>
   <td>

@@ -63,6 +63,27 @@ $( document ).ready( function() {
         return false;
     } );
 
+    $( 'a.mark-seen-search' ).click( function() {
+        var button = $(this);
+        $.post(
+            '/seen/search.json',
+            {
+                json: $.toJSON( {
+                    search_engine_id: button.attr( 'search-engine-id' ),
+                    terms: button.attr( 'terms' ),
+                } )
+            },
+            function( response ) {
+                if( response.success ) {
+                    slideUp_tr( button.closest( 'tr' ) );
+                }
+                show_result_messages( response );
+            },
+            'json'
+        );
+        return false;
+    } );
+
     $( 'a.get-page-rank' ).click( function() {
         var button = $(this);
         $.post(
