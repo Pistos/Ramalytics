@@ -1,6 +1,8 @@
 <h3>#{@subdomain}</h3>
 
-<h4>New Referrers</h4>
+<a href="/stats/#{@subdomain.id}/#{ @seen ? 'unseen' : 'seen' }">View #{ @seen ? 'New' : 'Seen' }</a>
+
+<h4>#{ @seen ? 'Seen' : 'New' } Referrers</h4>
 
 <table id="referrers" class="table">
 
@@ -29,7 +31,7 @@
 </table>
 
 
-<h4>New Searches</h4>
+<h4>#{ @seen ? 'Seen' : 'New' } Searches</h4>
 
 <table id="searches" class="table">
 

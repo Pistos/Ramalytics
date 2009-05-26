@@ -18,7 +18,7 @@ class MainController < Controller
     @sites = user.tracked_sites
   end
 
-  def stats( subdomain_id )
+  def stats( subdomain_id, seen_str = 'unseen' )
     redirect_referrer  if ! logged_in?
     @subdomain = Subdomain[ subdomain_id.to_i ]
     if @subdomain.nil?
@@ -34,6 +34,8 @@ class MainController < Controller
       redirect_referrer
     end
 
+    @seen = ( /^[sty1]/i === seen_str )
+
     searches = Search.s(
       %{
         SELECT
@@ -44,12 +46,13 @@ class MainController < Controller
           , uris u
         WHERE
           s.user_id = ?
-          AND s.seen = FALSE
+          AND s.seen = ?
           AND s.hit_uri_id = u.id
           AND u.subdomain_path_id = sp.id
           AND sp.subdomain_id = ?
       },
       user.id,
+      @seen,
       @subdomain.id
     )
 
@@ -62,11 +65,12 @@ class MainController < Controller
           , subdomain_paths sp
         WHERE
           r.user_id = ?
-          AND r.seen = FALSE
+          AND r.seen = ?
           AND r.subdomain_path_id = sp.id
           AND sp.subdomain_id = ?
       },
       user.id,
+      @seen,
       @subdomain.id
     ).reject { |r| searches.find { |s| s.uri_id == r.uri_id } }
 
