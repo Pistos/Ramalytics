@@ -34,7 +34,41 @@ function slideUp_tr( tr ) {
 };
 
 function add_spinner_to( target ) {
-    target.append( '<img src="/images/spinner.gif" alt="..."/>' );
+    target.append( '<img src="/images/spinner.gif" alt="..." class="spinner"/>' );
+};
+
+function retrieve_next_stats() {
+    var targets = $( '.stats-new:empty' );
+    if( targets.length == 0 ) {
+        return;
+    }
+    targets.each( function() {
+        var target = $(this);
+        var subdomain_id = target.attr( 'subdomain-id' );
+        add_spinner_to( target );
+        $.post(
+            '/site/stats.json',
+            { json: $.toJSON(
+                { subdomain_id: subdomain_id, }
+            ) },
+            function( response ) {
+                if( response.result ) {
+                    var rc = response.result.referrer_count;
+                    var sc = response.result.search_count;
+                    target.text( rc + 'r | ' + sc + 's' );
+                    if( rc + sc == 0 ) {
+                        target.addClass( 'unimportant' );
+                    }
+                }
+                show_result_messages( response );
+                setTimeout( 0, retrieve_next_stats() );
+            },
+            'json'
+        );
+        if( $( '.stats-new .spinner' ).length >= 2 ) {
+            return false;
+        }
+    } );
 };
 
 $( document ).ready( function() {
@@ -117,27 +151,5 @@ $( document ).ready( function() {
         return false;
     } );
 
-    $( '.stats-new' ).each( function() {
-        var target = $(this);
-        var subdomain_id = target.attr( 'subdomain-id' );
-        add_spinner_to( target );
-        $.post(
-            '/site/stats.json',
-            { json: $.toJSON(
-                { subdomain_id: subdomain_id, }
-            ) },
-            function( response ) {
-                if( response.result ) {
-                    var rc = response.result.referrer_count;
-                    var sc = response.result.search_count;
-                    target.text( rc + 'r | ' + sc + 's' );
-                    if( rc + sc == 0 ) {
-                        target.addClass( 'unimportant' );
-                    }
-                }
-                show_result_messages( response );
-            },
-            'json'
-        );
-    } );
+    retrieve_next_stats();
 } );
