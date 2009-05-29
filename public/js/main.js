@@ -33,6 +33,10 @@ function slideUp_tr( tr ) {
     });
 };
 
+function add_spinner_to( target ) {
+    target.append( '<img src="/images/spinner.gif" alt="..."/>' );
+};
+
 $( document ).ready( function() {
     $( 'textarea' ).focus( function() {
         this.select();
@@ -91,6 +95,7 @@ $( document ).ready( function() {
 
     $( 'a.get-page-rank' ).click( function() {
         var button = $(this);
+        add_spinner_to( button.prev( '.page-rank' ) );
         $.post(
             '/site/page_rank.json',
             { json: $.toJSON(
@@ -115,6 +120,7 @@ $( document ).ready( function() {
     $( '.stats-new' ).each( function() {
         var target = $(this);
         var subdomain_id = target.attr( 'subdomain-id' );
+        add_spinner_to( target );
         $.post(
             '/site/stats.json',
             { json: $.toJSON(
