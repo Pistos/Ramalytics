@@ -78,3 +78,12 @@ CREATE TABLE search_engines (
     , link_selector     VARCHAR( 256 )
     , UNIQUE( subdomain_path_id, search_param )
 );
+
+CREATE TABLE search_sightings (
+      id                 SERIAL      PRIMARY KEY
+    , user_id            INTEGER     NOT NULL REFERENCES users( id )
+    , search_engine_id   INTEGER     NOT NULL REFERENCES search_engines( id )
+    , terms              VARCHAR( 1024 ) NOT NULL
+    , moment             TIMESTAMP   NOT NULL DEFAULT CURRENT_TIMESTAMP
+    , UNIQUE( user_id, search_engine_id, terms )
+);

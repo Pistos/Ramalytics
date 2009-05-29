@@ -72,7 +72,7 @@ class MainController < Controller
       user.id,
       @seen,
       @subdomain.id
-    ).reject { |r| searches.find { |s| s.uri_id == r.uri_id } }
+    ).reject { |r| r.seen? || !!searches.find { |s| s.uri_id == r.uri_id } }
 
     @searches = []
     searches.each do |s|

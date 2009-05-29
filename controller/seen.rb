@@ -106,29 +106,19 @@ class SeenController < Controller
 
     num_inserted = $dbh.i(
       %{
-        INSERT INTO referrer_sightings (
-          uri_id,
-          user_id
-        ) SELECT DISTINCT
-            s.uri_id
-          , #{ user.id }
-        FROM
-          searches s
-        WHERE
-          s.search_engine_id = ?
-          AND s.terms = ?
-          AND NOT EXISTS(
-            SELECT 1
-            FROM referrer_sightings rs
-            WHERE
-              rs.uri_id = s.uri_id
-              AND rs.user_id = ?
-            LIMIT 1
-          )
+        INSERT INTO search_sightings (
+            user_id
+          , search_engine_id
+          , terms
+        ) VALUES (
+            ?
+          , ?
+          , ?
+        )
       },
+      user.id,
       data[ 'search_engine_id' ].to_i,
-      terms,
-      user.id
+      terms
     )
     if num_inserted > 0
       { 'success' => "Marked search for \"#{terms}\" as seen." }

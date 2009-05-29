@@ -16,6 +16,7 @@ require 'model/user'
 require 'model/subdomain_access'
 require 'model/referrer_sighting'
 require 'model/search_engine'
+require 'model/search_sighting'
 
 require 'model/referrer'
 require 'model/search'

@@ -99,17 +99,37 @@ CREATE OR REPLACE VIEW search_engine_path_links AS
         search_engine_paths sep
 ;
 
+CREATE OR REPLACE FUNCTION terms_from_query( VARCHAR, VARCHAR )
+    RETURNS VARCHAR
+    LANGUAGE 'plpgsql'
+    AS $$
+DECLARE
+    query ALIAS FOR $1;
+    search_param ALIAS FOR $2;
+BEGIN
+    RETURN substring( query from '(?:^' || E'\\' || '?|&)' || search_param || '=([^&]+)(?:&|$)' );
+END;
+$$;
+
 CREATE OR REPLACE VIEW searches AS
     SELECT DISTINCT
           r.user_id
         , r.uri_id
         , r.hit_uri_id
-        , r.seen
+        , EXISTS(
+            SELECT 1
+            FROM search_sightings ss
+            WHERE
+                ss.user_id = r.user_id
+                AND ss.search_engine_id = se.id
+                AND terms_from_query( u.query, se.search_param ) = ss.terms
+            LIMIT 1
+        ) AS seen
         , r.subdomain_path_id
         , se.id AS search_engine_id
         , sep.path
         , sepl.path_link
-        , substring( u.query from '(?:^' || E'\\' || '?|&)' || se.search_param || '=([^&]+)(?:&|$)' ) AS terms
+        , terms_from_query( u.query, se.search_param ) AS terms
     FROM
           referrers r
         , search_engines se
