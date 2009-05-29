@@ -106,4 +106,26 @@ class SiteController < Controller
     end
 
   end
+
+  def stats
+    if ! logged_in?
+      return { 'error' => "Not logged in." }
+    end
+
+    data = JSON.parse( request[ 'json' ] )
+    sd = Subdomain[ data[ 'subdomain_id' ].to_i ]
+    if sd.nil?
+      return { 'error' => 'Unknown subdomain.' }
+    end
+
+    referrers, searches = sd.referrers_and_searches( user.id )
+
+    {
+      success: true,
+      result: {
+        referrer_count: referrers.size,
+        search_count: searches.size,
+      }
+    }
+  end
 end

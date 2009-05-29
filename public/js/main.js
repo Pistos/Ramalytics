@@ -111,4 +111,27 @@ $( document ).ready( function() {
         );
         return false;
     } );
+
+    $( '.stats-new' ).each( function() {
+        var target = $(this);
+        var subdomain_id = target.attr( 'subdomain-id' );
+        $.post(
+            '/site/stats.json',
+            { json: $.toJSON(
+                { subdomain_id: subdomain_id, }
+            ) },
+            function( response ) {
+                if( response.result ) {
+                    var rc = response.result.referrer_count;
+                    var sc = response.result.search_count;
+                    target.text( rc + 'r | ' + sc + 's' );
+                    if( rc + sc == 0 ) {
+                        target.addClass( 'unimportant' );
+                    }
+                }
+                show_result_messages( response );
+            },
+            'json'
+        );
+    } );
 } );

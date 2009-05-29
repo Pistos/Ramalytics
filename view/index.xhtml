@@ -18,12 +18,14 @@ http://<input type="text" name="site"/> <input type="submit" value="Add"/>
 
 <thead><tr>
 <th>Site</th>
+<th>New Ref | Srch</th>
 <th>Challenge File</th>
 </tr></thead>
 
 <?r @sites.each do |s| ?>
 <tr>
 <td class="domainname"><a href="/stats/#{s.subdomain_id}">#{s.subdomain}</a></td>
+<td class="stats-new" subdomain-id="#{s.subdomain.id}"></td>
 <td>
 <?r if s.challenge ?>
   <a href="/site/verify/#{s.id}">Verify</a>

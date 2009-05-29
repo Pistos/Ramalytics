@@ -145,3 +145,7 @@ td.domainname {
 #nav > * {
     margin-right: 1em;
 }
+
+.unimportant {
+    opacity: 0.4;
+}
