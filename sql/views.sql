@@ -139,6 +139,7 @@ CREATE OR REPLACE VIEW searches AS
     WHERE
         r.seen = FALSE
         AND se.subdomain_path_id = r.referrer_subdomain_path_id
+        AND terms_from_query( u.query, se.search_param ) IS NOT NULL
         AND sep.id = se.id
         AND sepl.id = se.id
         AND u.id = r.uri_id
